@@ -7,19 +7,19 @@ import HistoryMedical from './components/pages/HistoryMedical';
 import PatientSearch from './components/pages/PatientSearch';
 import GenerateReceta from './components/pages/GenerateReceta';
 
-
 function App() {
   return (
     <Router>
       <Routes>
-
+        {/* Página de login sin barra de menú */}
         <Route path="/" element={<Login />} />
         
-        <Route path="/" element={<MainLayout />}>
-          <Route path="home" element={<Home />} />
+        {/* Páginas con barra de menú (MainLayout) */}
+        <Route path="/dashboard" element={<MainLayout />}>
+          <Route index element={<Home />} />  {/* /dashboard muestra Home */}
           <Route path="historyMedical" element={<HistoryMedical />} />
           <Route path="pacientes" element={<PatientSearch />} />
-          {/* <Route path="receta" element={<GenerateReceta />} /> */}
+          <Route path="receta" element={<GenerateReceta />} />
         </Route>
       </Routes>
     </Router>

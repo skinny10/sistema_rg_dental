@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Cambio principal aquí
 import {
   Home,
   Users,
@@ -19,8 +20,10 @@ import {
 } from 'lucide-react';
 
 const Sidebar = ({ activeSection, onSectionChange }) => {
+  const navigate = useNavigate(); // Usar navigate en lugar de window.location.href
+  
   const handleNavigation = (path) => {
-    window.location.href = path;
+    navigate(path); // Navegación con React Router
   };
   
   const [showPatientModal, setShowPatientModal] = useState(false);
@@ -45,10 +48,11 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
     motivo: ''
   });
 
+  // Rutas actualizadas para coincidir con la nueva configuración
   const menuItems = [
-    { id: 'dashboard', icon: Home, label: 'Home', path: '/home' },
-    { id: 'pacientes', icon: Users, label: 'Pacientes', path: '/pacientes' },
-    { id: 'historial-medico', icon: FolderOpen, label: 'Historial Médico', path: '/historyMedical' },
+    { id: 'dashboard', icon: Home, label: 'Home', path: '/dashboard' },
+    { id: 'pacientes', icon: Users, label: 'Pacientes', path: '/dashboard/pacientes' },
+    { id: 'historial-medico', icon: FolderOpen, label: 'Historial Médico', path: '/dashboard/historyMedical' },
   ];
 
   useEffect(() => {
@@ -100,7 +104,6 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
   const handleCreateQuickAppointment = async () => {
     console.log('=== FRONTEND: Creando cita ===');
     console.log('Datos a enviar:', appointmentData);
-
 
     if (!appointmentData.pacienteNombre.trim() || !appointmentData.fecha || !appointmentData.hora) {
       alert('Nombre, fecha y hora son obligatorios');
@@ -175,6 +178,12 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
     setTimeout(() => successDiv.remove(), 3000);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    console.log('Cerrando sesión...');
+    navigate('/'); // Navegar al login
+  };
+
   const today = new Date().toISOString().split('T')[0];
 
   return (
@@ -247,10 +256,7 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
       <div className="px-4 py-4 border-t border-gray-200">
         <div className="space-y-2">
           <div
-            onClick={() => {
-              localStorage.removeItem('token');
-              console.log('Cerrando sesión...');
-            }}
+            onClick={handleLogout}
             className="flex items-center px-4 py-3 rounded-xl cursor-pointer text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition"
           >
             <LogOut className="w-4 h-4 mr-3" />

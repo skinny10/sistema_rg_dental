@@ -9,15 +9,16 @@ export default function MainLayout() {
   useEffect(() => {
     const path = location.pathname;
     
-    if (path === '/home') {
+    // Actualizar las rutas para que coincidan con la nueva configuración
+    if (path === '/dashboard') {
       setActiveSection('dashboard');
-    } else if (path === '/pacientes') {
+    } else if (path === '/dashboard/pacientes') {
       setActiveSection('pacientes');
-    } else if (path === '/generar-receta') {
+    } else if (path === '/dashboard/receta') {
       setActiveSection('generar-receta');
-    } else if (path === '/historyMedical') {
+    } else if (path === '/dashboard/historyMedical') {
       setActiveSection('historial-medico');
-    } else if (path === '/configuracion') {
+    } else if (path === '/dashboard/configuracion') {
       setActiveSection('settings');
     }
   }, [location.pathname]);
