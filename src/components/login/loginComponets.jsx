@@ -29,7 +29,7 @@ export default function LoginComponents() {
           icon: 'success',
           confirmButtonColor: '#3b82f6'
         }).then(() => {
-          navigate("/home");
+          navigate("/dashboard");
         });
       } else {
         Swal.fire({
